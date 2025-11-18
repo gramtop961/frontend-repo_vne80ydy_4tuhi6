@@ -1,73 +1,87 @@
-function App() {
+import React from 'react'
+import { useEffect, useState } from 'react'
+import Spline from '@splinetool/react-spline'
+import { Header, Footer, Container, Card } from './components/UI'
+import { DataProvider, useData } from './components/DataContext'
+import SEO from './components/SEO'
+import { Link } from 'react-router-dom'
+
+function HomeContent() {
+  const { stats } = useData()
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.05),transparent_50%)]"></div>
-
-      <div className="relative min-h-screen flex items-center justify-center p-8">
-        <div className="max-w-2xl w-full">
-          {/* Header with Flames icon */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center mb-6">
-              <img
-                src="/flame-icon.svg"
-                alt="Flames"
-                className="w-24 h-24 drop-shadow-[0_0_25px_rgba(59,130,246,0.5)]"
-              />
-            </div>
-
-            <h1 className="text-5xl font-bold text-white mb-4 tracking-tight">
-              Flames Blue
-            </h1>
-
-            <p className="text-xl text-blue-200 mb-6">
-              Build applications through conversation
-            </p>
-          </div>
-
-          {/* Instructions */}
-          <div className="bg-slate-800/50 backdrop-blur-sm border border-blue-500/20 rounded-2xl p-8 shadow-xl mb-6">
-            <div className="flex items-start gap-4 mb-6">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                1
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Describe your idea</h3>
-                <p className="text-blue-200/80 text-sm">Use the chat panel on the left to tell the AI what you want to build</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4 mb-6">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                2
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Watch it build</h3>
-                <p className="text-blue-200/80 text-sm">Your app will appear in this preview as the AI generates the code</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold">
-                3
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-1">Refine and iterate</h3>
-                <p className="text-blue-200/80 text-sm">Continue the conversation to add features and make changes</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="text-center">
-            <p className="text-sm text-blue-300/60">
-              No coding required • Just describe what you want
-            </p>
-          </div>
+    <>
+      <SEO />
+      <div className="relative">
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-500/10 via-transparent to-transparent" />
+        <div className="relative h-[60vh] min-h-[440px] w-full overflow-hidden">
+          <Spline scene="https://prod.spline.design/hGDm7Foxug7C6E8s/scene.splinecode" style={{ width: '100%', height: '100%' }} />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent dark:from-neutral-950" />
         </div>
       </div>
-    </div>
+
+      <Container className="-mt-24">
+        <div className="rounded-xl border border-neutral-200 bg-white/80 p-6 shadow-xl backdrop-blur dark:border-neutral-800 dark:bg-neutral-900/80">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <Card title="CO2 concentration" value={stats.co2ppm?.toFixed?.(2)} unit="ppm" />
+            <Card title="Global temperature rise" value={stats.tempRise?.toFixed?.(2)} unit="°C" />
+            <Card title="Sea level rise" value={stats.seaLevel?.toFixed?.(1)} unit="mm" />
+            <Card title="Arctic ice extent" value={stats.iceExtent?.toFixed?.(2)} unit="million km²" />
+          </div>
+          {/* ADS HERE: 728x90 */}
+          <div className="mt-6 grid place-items-center">
+            <div className="h-[90px] w-[728px] max-w-full rounded border border-dashed border-neutral-300 text-neutral-400 dark:border-neutral-700 dark:text-neutral-600 grid place-items-center text-xs">AD 728x90</div>
+          </div>
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Link className="group rounded-lg border border-neutral-200 bg-white p-4 text-sm shadow-sm transition hover:border-orange-400 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900" to="/co2">
+              <div className="font-medium">CO2</div>
+              <div className="mt-1 text-neutral-500 group-hover:text-neutral-700 dark:text-neutral-400">Line chart 1750–2024 and country table</div>
+            </Link>
+            <Link className="group rounded-lg border border-neutral-200 bg-white p-4 text-sm shadow-sm transition hover:border-orange-400 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900" to="/temperature">
+              <div className="font-medium">Temperature</div>
+              <div className="mt-1 text-neutral-500 group-hover:text-neutral-700 dark:text-neutral-400">Anomaly map + yearly bars</div>
+            </Link>
+            <Link className="group rounded-lg border border-neutral-200 bg-white p-4 text-sm shadow-sm transition hover:border-orange-400 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900" to="/sea-level">
+              <div className="font-medium">Sea level</div>
+              <div className="mt-1 text-neutral-500 group-hover:text-neutral-700 dark:text-neutral-400">Observed + projections</div>
+            </Link>
+            <Link className="group rounded-lg border border-neutral-200 bg-white p-4 text-sm shadow-sm transition hover:border-orange-400 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900" to="/sources">
+              <div className="font-medium">Sources</div>
+              <div className="mt-1 text-neutral-500 group-hover:text-neutral-700 dark:text-neutral-400">All datasets & updates</div>
+            </Link>
+          </div>
+        </div>
+      </Container>
+    </>
   )
 }
 
-export default App
+export default function App() {
+  const [theme, setTheme] = useState('light')
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)')
+    const initial = mq.matches ? 'dark' : 'light'
+    const saved = localStorage.getItem('theme')
+    const next = saved || initial
+    setTheme(next)
+    document.documentElement.classList.toggle('dark', next === 'dark')
+  }, [])
+
+  const toggle = () => {
+    setTheme((t) => {
+      const next = t === 'dark' ? 'light' : 'dark'
+      document.documentElement.classList.toggle('dark', next === 'dark')
+      localStorage.setItem('theme', next)
+      return next
+    })
+  }
+
+  return (
+    <DataProvider>
+      <div className="min-h-screen bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
+        <Header onToggleTheme={toggle} theme={theme} />
+        <HomeContent />
+        <Footer />
+      </div>
+    </DataProvider>
+  )
+}
